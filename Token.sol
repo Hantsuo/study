@@ -9,7 +9,7 @@ contract Token {
     address public minter;  // 铸造地址
     mapping(address => uint) public balance; //地址余额映射
     
-    constructor(address _minter) public {
+    constructor(address _minter) {
         minter = _minter;
     }
     
