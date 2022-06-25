@@ -5,10 +5,10 @@ contract Token {
     string public name = "solidity";
     string public symbol = "SOL";
     uint256 public decimal = 18;
-    uint256 public totalSupply = 210000000;
+    uint256 public _maxSupply = 21000000 *10 ** 18;
     address public minter;  // 铸造地址
-    mapping(address => uint) public balance; //地址余额映射
-    
+    mapping(address => uint) public _balance; //地址余额映射
+    uint public _totalSupply;
     constructor(address _minter) {
         minter = _minter;
     }
@@ -18,18 +18,20 @@ contract Token {
         require (msg.sender == minter,"not is own account" );
         _;
     }
+
     function send(address get, uint amount) public{
-        require(msg.sender.balance >= amount,"not enougt balance");
-        balance[msg.sender] -= amount;
-        balance[get] += amount;
+        require(_balance[msg.sender] >= amount,"not enougt balance");
+        _balance[msg.sender] -= amount;
+        _balance[get] += amount;
         
     }
     function mint(address receiver, uint amount) public onlyOwner{
-        balance[receiver] += amount;
+        require(_totalSupply + amount <= _maxSupply,"over maxsupply");
+        _totalSupply += amount;
+        _balance[receiver] += amount;
     }
    
-}
-
+}   
 
 // contract ValueTypes{
 //     bool public a = true; //布尔值
