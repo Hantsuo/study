@@ -8,15 +8,26 @@ contract Token {
     uint256 public totalSupply = 210000000;
     address public minter;  // 铸造地址
     mapping(address => uint) public balance; //地址余额映射
-
-
-    function setAdminAccount(address account) public {
-        minter = account;
+    
+    constructor(address _minter) public {
+        minter = _minter;
     }
-    function mint(address receiver, uint amount) public{
-        balance[receiver] = amount;
-    }
+    
 
+    modifier onlyOwner() {
+        require (msg.sender == minter,"not is own account" );
+        _;
+    }
+    function send(address get, uint amount) public{
+        require(msg.sender.balance >= amount,"not enougt balance");
+        balance[msg.sender] -= amount;
+        balance[get] += amount;
+        
+    }
+    function mint(address receiver, uint amount) public onlyOwner{
+        balance[receiver] += amount;
+    }
+   
 }
 
 
