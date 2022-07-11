@@ -1,24 +1,35 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./TokenUsdt.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Tokensell{
-    uint public deadline;
-    address public axsToken = 0x0aa7726bc0cB085A3C4fbE3B09b91DD7E27f7fea;
+        uint256 public price = 1 * 10 * 18;
+        uint256 userbalance = 0;
+        uint starttime;
+        uint endtime;
+        address public axsToken = 0x0aa7726bc0cB085A3C4fbE3B09b91DD7E27f7fea;
+        mapping(address => uint) public _balance;
 
-    receive() external payable{}
-    constructor(uint _time){
-        deadline = block.timestamp + _time ;
+    function launch(uint _starttime , uint _endtime)external view{
+        require(_starttime >= block.timestamp);
+        require(_endtime >= _starttime);
+        require(_endtime <= block.timestamp + 30 days);
+        
     }
-    function receiveUsdt()public payable{
-        require(block.timestamp < deadline);
-        require(msg.value > 0);
-        IERC20(axsToken).transfer(msg.sender, msg.value * 100);
+    function sale(address get,uint256 buynmu)public{
+        require(block.timestamp >= starttime);
+        require(block.timestamp <= endtime);
+        uint256 paynum = buynmu * price / 10 ** 18;
+        IERC20(axsToken).transferFrom(msg.sender , address(this),paynum);
+        _balance[get] += buynmu;
     }
-    function transferUsdt(address to, uint256 amount)public{
-        require(block.timestamp < deadline);
-        require(msg.sender == axsToken);
-        payable(to).transfer(amount);
+    function wuthdraw()public{
+        require(block.timestamp >= starttime);
+        require(block.timestamp <= endtime);
+        uint bal = IERC20(axsToken).balanceOf(address(this));
+        IERC20(axsToken).transfer(0xdDE601eBe61EC5fD0729125D4Fd89F0f3b32B296,bal);
     }
+    
 }
