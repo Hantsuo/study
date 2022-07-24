@@ -163,7 +163,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Token.sol": "Token"
+			"TokenUsdt.sol": "Token"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -177,12 +177,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"Token.sol": {
-			"keccak256": "0x1c428d5e8c2fe42671d3c387e90b9eab1746da47a71cd320ec0010ab77b4ce99",
+		"TokenUsdt.sol": {
+			"keccak256": "0xf4a19b2a09d528b8c6801c60de3c5bba00542f1eec58b6a75839b0b2c69a7cd5",
 			"license": "Unlicense",
 			"urls": [
-				"bzz-raw://d0ca24b60057470460692bd5305e20a09752119b6b8d64e8fd5527e832b2eb48",
-				"dweb:/ipfs/QmQjGDfpTggYBxtN2B1WaZmWmA43CvvZidUDkywuw5LiH7"
+				"bzz-raw://9297badde0a62804c54f8c90359ff58c877cd6963c775caba72b68c538097603",
+				"dweb:/ipfs/QmYBWMHk54ZNu1JnR9fkhsrywzcZVnSH8AppqpAMWEsRUE"
 			]
 		}
 	},
